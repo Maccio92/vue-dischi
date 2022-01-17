@@ -1,13 +1,16 @@
 <template>
 <div class="container-fluid bg">
     <div class="container-70">
-        <div class="row row-cols-5 pt-5">
+        <div class="row row-cols-5 pt-5" v-if="songs">
             <div class=" col py-4 g-3 flex" v-for="(song, index) in songs" :key="index">
                 <img :src="song.poster" alt="">
                 <h2>{{song.title}}</h2>
                 <h3>{{song.author}}</h3>
                 <h4>{{song.year}}</h4>
             </div>
+        </div>
+        <div v-else>
+            <h1>Loading...</h1>
         </div>
     </div>
 </div>
@@ -20,11 +23,12 @@ name: 'Main',
 data(){
     return{
         queryApi: 'https://flynn.boolean.careers/exercises/api/array/music',
-        songs: [],
+        songs: null,
     };
 },
-created() {
-    axios.get(this.queryApi)
+mounted() {
+    setTimeout(() => {
+        axios.get(this.queryApi)
         .then((result) => {
         console.log(result.data.response);
         this.songs = result.data.response;
@@ -32,6 +36,8 @@ created() {
         .catch((error) => {
         console.log(error);
         })
+    }, 1500)
+    
 }
 }
 </script>
@@ -64,6 +70,11 @@ created() {
         }
     }
 }
+h1{
+    color: white;
+    text-transform: uppercase;
+    text-align: center;
+}
 h2{
     font-size: 1.2em;
     color: white;
@@ -73,9 +84,8 @@ h2{
 }
 h3, h4{
     color: #808080;
-     text-align: center;
-     font-size: 0.7em;
-     
+    text-align: center;
+    font-size: 0.7em;
 }
 
 </style>
