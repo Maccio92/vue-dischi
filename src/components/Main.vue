@@ -2,13 +2,13 @@
 <div class="container-fluid bg">
     <div class="container-70">
         <div class="row row-cols-5 pt-5" v-if="songs">
-            <div class=" col py-4 g-3 flex" v-for="(song, index) in songs" :key="index">
-                <img :src="song.poster" alt="">
-                <h2>{{song.title}}</h2>
-                <h3>{{song.author}}</h3>
-                <h4>{{song.year}}</h4>
-            </div>
-        </div>
+                <Card  v-for="(song, index) in songs" :key="index" 
+                    :poster="song.poster"
+                    :title="song.title"
+                    :author="song.author"
+                    :year="song.year"
+                />
+             </div>
         <div v-else>
             <h1>Loading...</h1>
         </div>
@@ -18,8 +18,12 @@
 
 <script>
 import axios from 'axios';
+import Card from './Card.vue'
 export default {
 name: 'Main',
+components: {
+    Card,
+},
 data(){
     return{
         queryApi: 'https://flynn.boolean.careers/exercises/api/array/music',
@@ -56,18 +60,7 @@ mounted() {
     .container-70{
         width: 70%;
         margin: 0 auto;
-        .flex{
-            display: flex;
-            flex-direction: column;
-            justify-content: start;
-            align-items: center;
-        }
-        .col{
-            background-color: #2e3a46;
-            img{
-            width: 100%;
-            }
-        }
+        
     }
 }
 h1{
@@ -75,17 +68,6 @@ h1{
     text-transform: uppercase;
     text-align: center;
 }
-h2{
-    font-size: 1.2em;
-    color: white;
-    text-align: center;
-    text-transform: uppercase;
-    margin-bottom: 0.5em;
-}
-h3, h4{
-    color: #808080;
-    text-align: center;
-    font-size: 0.7em;
-}
+
 
 </style>
