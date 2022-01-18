@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="d-flex justify-content-center mt-3">
         <label for="type">Filtra Per Genere </label>
         <select v-model="selectionGenre" name="genre" id="genre" @change="$emit('search', selectionGenre)">
             <option value="all">All</option>
@@ -24,5 +24,8 @@ export default {
 </script>
 
 <style>
-
+label{
+    color: white;
+    margin-right: 1em;
+}
 </style>

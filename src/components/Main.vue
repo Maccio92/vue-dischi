@@ -76,7 +76,7 @@ methods: {
 <style lang="scss" >
 .bg{
     background-color: #1e2d3b;
-    height: calc(100vh - 80px);
+    height: calc(100% - 80px);
 }
 h1{
     color: white;

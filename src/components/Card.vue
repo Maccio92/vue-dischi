@@ -22,15 +22,15 @@ export default {
     height: 100%;
 }
 h2{
-    font-size: 1.2em;
+    font-size: 90%;
     color: white;
     text-align: center;
     text-transform: uppercase;
-    margin-bottom: 0.5em;
+    margin: 0.5em 0; 
 }
 h3, h4{
     color: #808080;
     text-align: center;
-    font-size: 0.7em;
+    font-size: 60%;
 }
 </style>
