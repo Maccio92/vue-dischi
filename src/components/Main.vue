@@ -1,18 +1,14 @@
 <template>
-<div class="container-fluid bg">
-    <div>
-        <label for="type">Filtra Per Genere </label>
-        <select v-model="selectionGenre" name="genre" id="genre" @change="filter">
-            <option value="all">All</option>
-            <option value="rock">Rock</option>
-            <option value="pop">Pop</option>
-            <option value="jazz">Jazz</option>
-            <option value="metal">Metal</option>
-        </select>
-    </div>
-    <div class="container-70">
-        <div class="row row-cols-5 pt-5 gx-3" v-if="filtered">
-                <Card  v-for="(song, index) in filtered" :key="index" 
+<main class="bg">
+    
+    <div class="container">
+        <div class="row col d-flex justify-content-center">
+            <Selection  
+            @search="filter($event)"
+            />
+        </div>
+        <div class="row row-cols-5 pt-5 gx-3" v-if="songs">
+                <Card  v-for="(song, index) in songs" :key="index" 
                     :poster="song.poster"
                     :title="song.title"
                     :author="song.author"
@@ -23,47 +19,55 @@
             <h1>Loading...</h1>
         </div>
     </div>
-</div>
+
+</main>
+
 </template>
 
 <script>
 import axios from 'axios';
-import Card from './Card.vue'
+import Card from './Card.vue';
+import Selection from './Selection.vue'
+
 export default {
 name: 'Main',
 components: {
     Card,
+    Selection,
 },
 data(){
     return{
         queryApi: 'https://flynn.boolean.careers/exercises/api/array/music',
         songs: null,
-        selectionGenre: 'all',
+        // selectionGenre: 'all',
         filtered: null,
     };
 },
 mounted() {
     setTimeout(() => {
-        axios.get(this.queryApi)
-        .then((result) => {
-        console.log(result.data.response);
-        this.songs = result.data.response;
-        this.filtered = result.data.response;
-        })
-        .catch((error) => {
-        console.log(error);
-        })
+        this.getCards();
     }, 1500)
     
 },
 methods: {
-    filter() {
-        this.filtered = this.songs
-        if(this.selectionGenre != 'all'){
-            this.filtered = this.songs.filter(element => element.genre.toLowerCase()  === this.selectionGenre);
-            console.log(this.filtered);
+    getCards () {
+			axios.get('https://flynn.boolean.careers/exercises/api/array/music')
+			.then((result) => {
+				this.songs = result.data.response;
+				this.filtered = result.data.response;
+				
+			})
+			.catch((error) => {
+				console.log(error);
+			})
+		},
+    filter(text) {
+        this.songs = this.filtered;
+        if(text != 'all'){
+            this.songs = this.songs.filter(element => {
+                return element.genre.toLowerCase().includes(text.toLowerCase())
+                });
         }
-		return this.filtered;
 		}
     }
 }
@@ -73,12 +77,6 @@ methods: {
 .bg{
     background-color: #1e2d3b;
     height: calc(100vh - 80px);
-    display: flex;
-    align-items: center;
-    .container-70{
-        width: 70%;
-        margin: 0 auto;
-    }
 }
 h1{
     color: white;
