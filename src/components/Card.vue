@@ -1,9 +1,11 @@
 <template>
-<div class="col py-4 g-3 flex">         
-    <img :src="poster" alt="">
-    <h2>{{title}}</h2>
-    <h3>{{author}}</h3>
-    <h4>{{year}}</h4>
+<div class="col py-4"> 
+    <div class="col-bg">        
+        <img class="img-fluid" :src="poster" alt="">
+        <h2>{{title}}</h2>
+        <h3>{{author}}</h3>
+        <h4>{{year}}</h4>
+    </div>
 </div>
 </template>
 
@@ -15,18 +17,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.flex{
-            display: flex;
-            flex-direction: column;
-            justify-content: start;
-            align-items: center;
-        }
-        .col{
-            background-color: #2e3a46;
-            img{
-            width: 100%;
-            }
-        }
+.col-bg{
+    background-color: #2e3a46;
+    height: 100%;
+}
 h2{
     font-size: 1.2em;
     color: white;
